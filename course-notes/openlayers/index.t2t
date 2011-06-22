@@ -80,7 +80,7 @@ directory and download and unpack OpenLayers into it. A copy of OpenLayers is
 provided on our resource cd, otherwise, fetch a copy from
 http://openlayers.org.
 
-So lets make a working dir and unpack OpenLayers into it:
+So let's make a working dir and unpack OpenLayers into it:
 
 ```
 mkdir ol
@@ -137,7 +137,7 @@ First I will provide the complete listing:
 ```
 
 
-Ok so lets try to understand what is going on here - I will break it down line
+OK, so let's try to understand what is going on here - I will break it down line
 by line:
 
 ``<html>`` - All html pages must start with this tag - it says "I'm starting my
@@ -187,7 +187,7 @@ page in 'h1' (largest) heading style.
 element? This is where it is defined. Because of its style definition in the
 header, it will occupy 512px x 512px space on the page underneath the heading.
 
-``<script>`` - Here I an inlining another piece of javascript within the web
+``<script>`` - Here I am inlining another piece of javascript within the web
 page. It will run as the page loads.
 
 ``var map = new OpenLayers.Map("map-id");`` - This line is javascript. It
@@ -276,7 +276,7 @@ improvements to the way in which we set up the map:
 ```
 
 
-Lets do a line by line analysis again:
+Let's do a line by line analysis again:
 
 ```
 <script src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.2&mkt=en-us"></script>
@@ -395,7 +395,7 @@ to place a button on the page with the text for the button specified by the
 label option.
 
 The //onclick// event of this button has been programmed with some mapserver
-api calls. Lets break them down one at a time:
+api calls. Let's break them down one at a time:
 
 ```map.setCenter()``` - Tells the openlayers map that we want to recenter it on a
 new point. This function takes two parameters - a coordinate and a zoom level.
@@ -409,7 +409,7 @@ pair 'lonlat' - even if it is in a projected coordinate reference system.
 **Now You try:** Add a new layer to the map (use google to find the url of a
 wms layer if you don't have one handy.
 
-If you have enabled firebug (and have enabled the jscript console, you can play
+If you have enabled firebug (and have enabled the jscript console), you can play
 around with the map interactively. For example, try these:
 
 ```
@@ -433,12 +433,12 @@ type. See if you can figure out some other ways to manipulate the map.
 
 === Set center based on user input ===
 
-Lets try an example where the user gets to decide where to recenter the map to:
+Let's try an example where the user gets to decide where to recenter the map to:
 
 Because everything is just html and javascript, you can create user interfaces
 to allow the user to interact with the map in other ways. In this example we
 add two input boxes (``input type ="text"``) and a button. When the user clicks
-the button, the values entered in the input boxes will be used to in a call to
+the button, the values entered in the input boxes will be used in a call to
 //map.setCenter()//.
 
 ```
@@ -514,7 +514,7 @@ projection before we can add the layer.
 ```
 
 
-Lets look in detail at the changes we have made to our project:
+Let's look in detail at the changes we have made to our project:
 
 Once again we have our script to initialise the map in the <head> section.  Our
 updated script starts off with these three lines:
