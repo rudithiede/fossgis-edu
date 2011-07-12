@@ -192,7 +192,7 @@ django
 == Activate the virtual env ==
 
 Whenever you start a shell session, you need to source the activate script to
-enable the python virtual environment:
+enable the python virtual environment. From the top-level django directory, do:
 
 ```
 source python/bin/activate
@@ -211,6 +211,8 @@ of the support for spatial datasets via PostGIS, so let's install and use it:
 sudo apt-get install postgresql-8.4-postgis
 ```
 
+Alternatively, you may be using, or want to install, a newer version of
+PostgreSQL. We will mostly be covering the procedure for 8.4, however.
 
 
 
@@ -235,13 +237,20 @@ psql django_project < /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql
 ''Note:'' If you are using postgresql 8.4, those last two lines should rather look
 like this:
 
+%================================================================================================== /testing
+
 ```
 psql django_project </usr/share/postgresql/8.4/contrib/postgis-1.5/postgis.sql 
 psql django_project </usr/share/postgresql/8.4/contrib/postgis-1.5/spatial_ref_sys.sql
 ```
 
 And if you're one of the pioneers using 9.0, substitute '9.0' for '8.4' in
-the above two lines.
+the above two lines, thus:
+
+```
+psql django_project </usr/share/postgresql/9.0/contrib/postgis-1.5/postgis.sql
+psql django_project </usr/share/postgresql/9.0/contrib/postgis-1.5/spatial_ref_sys.sql
+```
 
 
 
@@ -259,7 +268,8 @@ DATABASE_HOST = 'localhost'              # Set to empty string for localhost. No
 DATABASE_PORT = '5432'                   # Set to empty string for default. Not used with sqlite3.
 ```
 
-Or, depending on what you find already written in the file:
+Or, depending on what you find already written in the file, you may need to
+use the following format:
 
 ```
 DATABASES = {
