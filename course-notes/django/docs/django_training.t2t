@@ -42,8 +42,8 @@ follows:
 
 - A user opens their browser and points it at a django url
 - The url **request** is transported via the http:// protocol to a host
-- The host runs a web server such as apache with the **mod_python** module
-  installed receives the request and passes it into the django application
+- The host (running a web server such as apache with the **mod_python** module
+  installed) receives the request and passes it into the django application
 - Before django does anything with the request, it passes it through 0 or more
   **middleware layers** which  if needed clean up or pre-parse the http request
 - The middleware then forwards the request to the **controller**
@@ -70,13 +70,13 @@ follows:
 -
 
 You will notice quite a few 'typically' and 'can' qualifiers in the above
-scenario. This is because, Django is extremely flexible and you can adapt this
+scenario. This is because Django is extremely flexible and you can adapt this
 work flow according to your needs. This includes e.g. having a view return a
-response without using any models, any forms, any templates. Similarly
-templates need not use custom templatetags, forms need not use custom widgets
+response without using any models, any forms, or any templates. Similarly,
+templates need not use custom templatetags, forms need not use custom widgets,
 etc.
 
-Now that we have an overview in place, lets dive in and try Django out!
+Now that we have an overview in place, let's dive in and try Django out!
 
 = Django Installation =
 
@@ -112,15 +112,15 @@ django
 ```
 
 Django divides your work into projects and applications. A ''project'' provides 
-shared templates, media (images, logos etc) to its applications and a shared
-user database and so on.
+shared templates, media (images, logos, etc.), a shared user database, and so on,
+to its applications.
 
 An ''application'' provides some specific functionality. You can also install 
 third party applications under your project directory to provide things like 
-login frameworks etc.
+login frameworks, etc.
 
 We will get on to how projects and applications are created in a minute, but first 
-lets get our python virtual environment set up...
+let's get our python virtual environment set up...
 
 == Creating the virtual environment ==
 
@@ -192,7 +192,7 @@ django
 == Activate the virtual env ==
 
 Whenever you start a shell session, you need to source the activate script to
-enabled the python virtual environment:
+enable the python virtual environment:
 
 ```
 source python/bin/activate
@@ -204,8 +204,8 @@ in preference over using the system libs under /usr/lib/python.
 == Setup Postgresql ==
 
 You don't need to use postgresql with django - it supports a variety of 
-other databases. But its a good choice for a backend especially in light 
-of the support for spatial datasets via PostGIS, so lets install and use it:
+other databases. But it's a good choice for a backend, especially in light 
+of the support for spatial datasets via PostGIS, so let's install and use it:
 
 ```
 sudo apt-get install postgresql-8.4-postgis
@@ -217,8 +217,8 @@ sudo apt-get install postgresql-8.4-postgis
 = Initial project setup =
 
 A project can contain one or more applications. We will use 
-the postgis backend here though various other backends are 
-supported and more are on the way. Lets create our first project:
+the postgis backend here, though various other backends are 
+supported and more are on the way. Let's create our first project:
 
 
 ```
@@ -232,13 +232,17 @@ psql django_project < /usr/share/postgresql-8.3-postgis/lwpostgis.sql
 psql django_project < /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql 
 ```
 
-''Note:'' If you are using postgresql 8.4 those last two lines should look like this 
-rather:
+''Note:'' If you are using postgresql 8.4, those last two lines should rather look
+like this:
 
 ```
 psql django_project </usr/share/postgresql/8.4/contrib/postgis-1.5/postgis.sql 
 psql django_project </usr/share/postgresql/8.4/contrib/postgis-1.5/spatial_ref_sys.sql
 ```
+
+And if you're one of the pioneers using 9.0, substitute '9.0' for '8.4' in
+the above two lines.
+
 
 
 == Setup your Database connection ==
@@ -247,13 +251,33 @@ At this point you should fill in the database connection settings (in settings.p
 
 ```
 # Note delete django.db.backends.
-DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'django_project'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'foouser'             # Not used with sqlite3.
-DATABASE_PASSWORD = 'foopassword'         # Not used with sqlite3.
-DATABASE_HOST = 'localhost'             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = '5432'             # Set to empty string for default. Not used with sqlite3.
+DATABASE_ENGINE = 'postgresql_psycopg2'  # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASE_NAME = 'django_project'         # Or path to database file if using sqlite3.
+DATABASE_USER = 'foouser'                # Not used with sqlite3.
+DATABASE_PASSWORD = 'foopassword'        # Not used with sqlite3.
+DATABASE_HOST = 'localhost'              # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_PORT = '5432'                   # Set to empty string for default. Not used with sqlite3.
 ```
+
+Or, depending on what you find already written in the file:
+
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'django_project',        # Or path to database file if using sqlite3.
+        'USER': 'foouser',               # Not used with sqlite3.
+        'PASSWORD': 'foopassword',       # Not used with sqlite3.
+        'HOST': 'localhost',             # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '5432',                  # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+```
+
+... where 'foouser' and 'foopassword' are a registered user/password combination
+in PostgreSQL.
+
 Also set the time zone:
 
 ```
@@ -272,7 +296,7 @@ You should now be able to visit your project here:
 http://localhost:8000
 ```
 
-Note you can use any port you like.
+(Note that you can use any port you like.)
 
 
 Your browser should show a message something like this:
@@ -290,7 +314,7 @@ You're seeing this message because you have DEBUG = True in your Django
 settings file and you haven't configured any URLs. Get to work!
 ```
 
-Lets take another look at our directory structure now:
+Let's take another look at our directory structure now:
 
 ```
 django
@@ -382,8 +406,8 @@ You should see a basic placeholder message.
 
 == Create a model ==
 
-Now the fun starts. Django has a fun, intuitive and powerful way to define
-models. Each model is a python class. Edit doodle/models.py and add:
+This is where the fun begins. Django has a fun, intuitive and powerful way to
+define models. Each model is a python class. Edit doodle/models.py and add:
 
 ```
 # our base class
@@ -422,7 +446,7 @@ INSTALLED_APPS = (
 
 ```
 
-Nifty - now lets deploy our new model!
+Nifty - now let's deploy our new model!
 
 ```
 python manage.py syncdb
@@ -493,7 +517,7 @@ public | geometry_columns                  | table    | timlinux
 public | spatial_ref_sys                   | table    | timlinux
 ```
 
-Lets take a look at the table it created:
+Let's take a look at the table it created:
 
 ```
 doodle=# \d doodle
@@ -529,6 +553,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> myDoodle = Doodle()
 >>> myDoodle.name = "foo"
 >>> print myDoodle.name
+foo
 >>> myDoodle.doodle = 'LINESTRING(0 0, 10 10)'
 >>> print myDoodle.doodle
 LINESTRING (0.0000000000000000 0.0000000000000000, 10.0000000000000000 10.0000000000000000)
@@ -553,7 +578,7 @@ myDoodle2.name
 quit()
 ```
 
-Lets see what the above code does in the backend:
+Let's see what the above code does in the backend:
 
 ```
 psql django_project
@@ -570,11 +595,13 @@ code base that you can use from any python context (not just Django web apps).
 == Create a default admin view for the doodle model ==
 
 Django has a powerful autogenerated admin interface that you can use to manage
-the data in your models. Lets add the admin view for our doodle model:
+the data in your models. Let's add the admin view for our doodle model:
 
 ```
 vim doodle/admin.py
 ```
+
+(Note that this is a new file. That is as it should be.)
 
 Now add this:
 
@@ -606,6 +633,7 @@ vim urls.py
 ```
 
 And uncomment these lines near the top:
+
 ```
 from django.contrib import admin
 admin.autodiscover()
@@ -618,7 +646,8 @@ admin.autodiscover()
 (r'^admin/', include(admin.site.urls)),
 ```
 
-Lastly edit settings adding admin and gis apps to the installed apps list:
+Lastly, edit settings again, this time adding the admin app to the installed
+apps list:
 
 ```
  INSTALLED_APPS = (
@@ -626,15 +655,15 @@ Lastly edit settings adding admin and gis apps to the installed apps list:
   'django.contrib.contenttypes',
   'django.contrib.sessions',
   'django.contrib.sites',
-  # Add the next line for admin 
-  'django.contrib.admin',
-  # And the next line for the django gis components
+  # Add the next line for the django gis components
   'django.contrib.gis',
   'doodle',
+  # Add the next line for admin
+  'django.contrib.admin',
  )
 ```
 
-We need to tell django about our new admin model so we re-run syncdb:
+We need to tell django about our new admin model, so we re-run syncdb:
 
 ```
 python manage.py syncdb
